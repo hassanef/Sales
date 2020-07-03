@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "Factor";
+}
+@model List<Sales.Common.ViewModel.FactorViewModel>
+<div class="card">
+    <div class="card-header">
+       فاکتور مشتری
+        <span class="fas fa-file-text"></span>
+    </div>
+    <div class="card-body">
+
+
+        @foreach (var item in Model)
+        {
+                <div class="container">
+                    <div style="width:90%; margin:0 auto;">
+                        <table id="example" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th> نام کالا</th>
+                                    <th> نام واحد کالا</th>
+                                    <th>قیمت</th>
+                                    <th>مقدار</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>
+                                    <input type="hidden" class="fact" value="@item.Id" />
+                                    <input type="hidden" class="factDe" value="@item.FactorDetailId" />
+                                    <input type="hidden" class="pro" value="@item.ProductId" />
+                                </td>
+                                <td>
+                                    <label>@item.ProductName</label>
+                                </td>
+                                <td>
+                                    <label>@item.ProductUnitName</label>
+                                </td>
+                                <td>
+                                    <label id="price">@item.Price</label>
+                                </td>
+                                <td>
+                                    <input type="number" style="width:80px;" class="quan" name="quantity" value="@item.Quantity" />
+                                </td>
+                                <td>
+                                    <input class="btn btn-lg btn-primary update" type="button" value="بروزرسانی" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+        }
+        <br />
+        <br />
+        <h2 style="float:left;" id="total" class="text-info">@Model.First().TotalAmount.ToString()</h2> <h2 style="float:left;">جمع کل:</h2>
+
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        $('.update').click(function () {
+       
+            var quantity = parseInt($(this).closest("div").find(".quan").val());
+            var productId = parseInt($(this).closest("div").find(".pro").val());
+            var factorDetailId = parseInt($(this).closest("div").find(".factDe").val());
+            var factorId = parseInt($(this).closest("div").find(".fact").val());
+
+
+            $.ajax({
+                url: '/Factor/UpdateQuantity',
+                dataType: 'json',
+                type: 'Post',
+                data: JSON.stringify({ quantity: quantity, factorId: factorId, factorDetailId: factorDetailId, productId: productId }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (factorId) {
+                    debugger;
+                    if (factorId > 0) {
+
+                        alert('ذخیره انجام شد');
+                        window.location.href = "/Factor/Index/" + factorId;
+                    }
+                    else {
+                        alert('ذخیره انجام نشد!');
+                    }
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        });
+
+      
+    </script>
+}
