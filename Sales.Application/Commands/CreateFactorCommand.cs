@@ -9,9 +9,5 @@ namespace Sales.Application.Commands
     {
         public int[] ProductIds { get; set; }
 
-
-        //public CreateFactorCommand()
-        //{
-        //}
     }
 }

@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Sales.Application.Services
 {
-    public class  FactorService:IFactorService
+    public class  FactorQuery:IFactorQuery
     {
         private readonly ISalesDbContextReadOnly _salesDbContextReadOnly;
 
-        public FactorService(ISalesDbContextReadOnly salesDbContextReadOnly)
+        public FactorQuery(ISalesDbContextReadOnly salesDbContextReadOnly)
         {
             _salesDbContextReadOnly = salesDbContextReadOnly;
         }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Sales.Common.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Sales.Application.IServices
 {
-    public interface IProductUnitService
+    public interface IProductQuery
     {
-        Task<List<SelectListItem>> GetProductUnits();
+        Task<GridDataResult<ProductViewModel>> GetProducts(int pageSize, int pageNum);
     }
 }

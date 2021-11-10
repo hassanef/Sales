@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Sales.Application.Services
 {
-    public class ProductService:IProductService
+    public class ProductQuery:IProductQuery
     {
         private readonly ISalesDbContextReadOnly _salesDbContextReadOnly;
 
-        public ProductService(ISalesDbContextReadOnly salesDbContextReadOnly)
+        public ProductQuery(ISalesDbContextReadOnly salesDbContextReadOnly)
         {
             _salesDbContextReadOnly = salesDbContextReadOnly;
         }

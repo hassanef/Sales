@@ -5,7 +5,7 @@
 @model List<Sales.Common.ViewModel.FactorViewModel>
 <div class="card">
     <div class="card-header">
-       فاکتور مشتری
+       Invoicing
         <span class="fas fa-file-text"></span>
     </div>
     <div class="card-body">
@@ -19,10 +19,10 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th> نام کالا</th>
-                                    <th> نام واحد کالا</th>
-                                    <th>قیمت</th>
-                                    <th>مقدار</th>
+                                    <th> ProductName</th>
+                                    <th> UnitName  </th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -45,7 +45,7 @@
                                     <input type="number" style="width:80px;" class="quan" name="quantity" value="@item.Quantity" />
                                 </td>
                                 <td>
-                                    <input class="btn btn-lg btn-primary update" type="button" value="بروزرسانی" />
+                                    <input class="btn btn-lg btn-primary update" type="button" value="update" />
                                 </td>
                             </tr>
                         </table>
@@ -55,7 +55,7 @@
         }
         <br />
         <br />
-        <h2 style="float:left;" id="total" class="text-info">@Model.First().TotalAmount.ToString()</h2> <h2 style="float:left;">جمع کل:</h2>
+        <h2 style="float:left;">Total=</h2><h2 style="float:left;" id="total" class="text-info">@Model.First().TotalAmount.ToString()</h2> 
 
     </div>
 </div>
@@ -81,11 +81,11 @@
                     debugger;
                     if (factorId > 0) {
 
-                        alert('ذخیره انجام شد');
+                        alert('Save done');
                         window.location.href = "/Factor/Index/" + factorId;
                     }
                     else {
-                        alert('ذخیره انجام نشد!');
+                        alert('Save failed!');
                     }
                 },
                 error: function (errorThrown) {

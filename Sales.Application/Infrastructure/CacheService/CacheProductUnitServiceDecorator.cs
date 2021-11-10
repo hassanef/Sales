@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Sales.Application.Infrastructure.CacheService
 {
-    public class CacheProductUnitServiceDecorator:IProductUnitService
+    public class CacheProductUnitServiceDecorator:IProductUnitQuery
     {
-        private readonly IProductUnitService productService;
+        private readonly IProductUnitQuery productService;
         private readonly IMemoryCache cache;
         private const string MyModelCacheKey = "myModelCacheKey";
         private MemoryCacheEntryOptions cacheOptions;
 
         // alternatively use IDistributedCache if you use redis and multiple services
-        public CacheProductUnitServiceDecorator(IProductUnitService productService, IMemoryCache cache)
+        public CacheProductUnitServiceDecorator(IProductUnitQuery productService, IMemoryCache cache)
         {
             this.productService = productService;
             this.cache = cache;

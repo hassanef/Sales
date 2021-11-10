@@ -8,12 +8,9 @@ namespace Sales.Application.Commands
 {
     public class CreateProductUnitCommand : IRequest<bool>
     {
-        [Display(Name = "نام واحد کالا")]
+        [Display(Name = "Unit name")]
+        [Required(ErrorMessage = "Required")]
         public string Name { get; set; }
 
-        //public CreateProductUnitCommand(string name)
-        //{
-        //    Name = name;
-        //}
     }
 }

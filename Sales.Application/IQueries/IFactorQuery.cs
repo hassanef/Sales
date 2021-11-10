@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sales.Application.IServices
 {
-    public interface  IFactorService
+    public interface  IFactorQuery
     {
         Task<List<FactorViewModel>> GetFactorById(int factorId);
     }

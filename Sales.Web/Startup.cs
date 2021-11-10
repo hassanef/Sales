@@ -39,33 +39,23 @@ namespace Sales.Web
         {
             services.AddControllersWithViews();
 
-            services.AddMvcCore()
-             .AddFluentValidation();
+            services.AddMvcCore();
 
             services.AddDbContext<SalesDbContext>(options => options.UseSqlServer(
-          Configuration.GetConnectionString("ConnectionString")));
+                                                 Configuration.GetConnectionString("ConnectionString")));
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IFactorRepository, FactorRepository>();
-            services.AddScoped<IProductUnitRepository, ProductUnitRepository>();
-
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IFactorService, FactorService>();
-
-            services.AddScoped<ProductUnitService>();
-            services.AddScoped<IProductUnitService, CacheProductUnitServiceDecorator>(
+          
+            services.AddScoped<IProductUnitQuery, CacheProductUnitServiceDecorator>(
                 provider => new CacheProductUnitServiceDecorator(
-                    provider.GetService<ProductUnitService>(),
+                    provider.GetService<ProductUnitQuery>(),
                     provider.GetService<IMemoryCache>()
                 ));
 
-            services.AddScoped<ISalesDbContextReadOnly, SalesDbContextReadOnly>();
 
             var container = new ContainerBuilder();
             container.Populate(services);
 
+            container.RegisterModule(new ApplicationModule());
             container.RegisterModule(new MediatorModule());
             return new AutofacServiceProvider(container.Build());
         }

@@ -14,15 +14,15 @@ namespace Sales.Web.Controllers
     public class ProductController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly IProductService _productService;
-        private readonly IProductUnitService _productUnitService;
+        private readonly IProductQuery _productQuery;
+        private readonly IProductUnitQuery _productUnitQuery;
         public ProductController(IMediator mediator,
-                                 IProductService productService, 
-                                 IProductUnitService productUnitService)
+                                 IProductQuery productQuery,
+                                 IProductUnitQuery productUnitQuery)
         {
             _mediator = mediator;
-            _productService = productService;
-            _productUnitService = productUnitService;
+            _productQuery = productQuery;
+            _productUnitQuery = productUnitQuery;
         }
         public IActionResult Index()
         {
@@ -31,13 +31,13 @@ namespace Sales.Web.Controllers
         public async Task<IActionResult> Product()
         {
             var cmd = new CreateProductCommand();
-            cmd.ProductUnits = await _productUnitService.GetProductUnits();
+            cmd.ProductUnits = await _productUnitQuery.GetProductUnits();
 
             return View(cmd);
         }
         public IActionResult ProductUnit()
         {
-            
+
             return View();
         }
 
@@ -46,15 +46,7 @@ namespace Sales.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var result = await _mediator.Send(cmd);
-                }
-                catch (Exception)
-                {
-
-                    throw new Exception("CreateProductCommand has error!");
-                }
+                await _mediator.Send(cmd);
             }
 
             return RedirectToAction("Product");
@@ -65,15 +57,7 @@ namespace Sales.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var result = await _mediator.Send(cmd);
-                }
-                catch (Exception)
-                {
-
-                    throw new Exception("CreateProductUnitCommand has error!");
-                }
+                await _mediator.Send(cmd);
             }
 
             return RedirectToAction("ProductUnit");
@@ -85,29 +69,29 @@ namespace Sales.Web.Controllers
             var start = Request.Form["start"].FirstOrDefault() != null ? int.Parse(Request.Form["start"].FirstOrDefault()) : 0;
             var length = Request.Form["length"].FirstOrDefault() != null ? int.Parse(Request.Form["length"].FirstOrDefault()) : 10;
 
-            var productList = await _productService.GetProducts(length, start);
+            var products = await _productQuery.GetProducts(length, start);
 
             return Json(new
             {
                 draw = draw,
-                recordsFiltered = productList.total,
-                recordsTotal = productList.total,
-                data = productList.data
+                recordsFiltered = products.total,
+                recordsTotal = products.total,
+                data = products.data
             });
         }
         [HttpPost]
         public async Task<IActionResult> GetProductUnitData()
         {
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault() != null ? HttpContext.Request.Form["draw"].FirstOrDefault() : "";
-            var lst = await _productUnitService.GetProductUnits();
+            var productUnits = await _productUnitQuery.GetProductUnits();
 
-           
+
             return Json(new
             {
                 draw = draw,
-                recordsFiltered = 1000,
-                recordsTotal = 1000,
-                data = lst
+                recordsFiltered = 0,
+                recordsTotal = 0,
+                data = productUnits
             });
         }
     }

@@ -17,13 +17,13 @@ namespace Sales.Application.CommandHandlers
 {
     class CreateProductUnitCommandHandler : IRequestHandler<CreateProductUnitCommand, bool>
     {
-        private readonly IProductUnitService _productService;
+        private readonly IProductUnitQuery _productService;
         readonly IProductUnitRepository _productUnitRepository;
         private readonly IMemoryCache cache;
         private const string MyModelCacheKey = "myModelCacheKey";
         private MemoryCacheEntryOptions cacheOptions;
         public CreateProductUnitCommandHandler(IProductUnitRepository productUnitRepository, 
-                                               IProductUnitService productUnitService, 
+                                               IProductUnitQuery productUnitService, 
                                                IMemoryCache cache)
         {
             _productUnitRepository = productUnitRepository;
