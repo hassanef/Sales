@@ -14,7 +14,6 @@ namespace Sales.Application.Commands
         public string UnitPricingType { get;  set; }
         [Display(Name = "Price per unit")]
         [Required(ErrorMessage = "Required")]
-        [MinLength(2, ErrorMessage ="price should be bigger than 9")]
         public decimal UnitPricingValue { get;  set; }
         [Display(Name = "Product Unit")]
         [Required(ErrorMessage = "Required")]
