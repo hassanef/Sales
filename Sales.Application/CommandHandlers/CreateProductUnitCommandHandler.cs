@@ -17,7 +17,6 @@ namespace Sales.Application.CommandHandlers
 {
     class CreateProductUnitCommandHandler : IRequestHandler<CreateProductUnitCommand, bool>
     {
-        private readonly IProductUnitQuery _productService;
         readonly IProductUnitRepository _productUnitRepository;
         private readonly IMemoryCache cache;
         private const string MyModelCacheKey = "myModelCacheKey";
@@ -27,7 +26,6 @@ namespace Sales.Application.CommandHandlers
                                                IMemoryCache cache)
         {
             _productUnitRepository = productUnitRepository;
-            _productService = productUnitService;
             this.cache = cache;
 
             // 1 day caching
@@ -50,7 +48,7 @@ namespace Sales.Application.CommandHandlers
         }
         private async Task UpdateProductUnitCache()
         {
-            var value = cache.Get<List<SelectListItem>>("myModelCacheKey");
+            var value = cache.Get<List<SelectListItem>>(MyModelCacheKey);
             // Not found, get from DB
             value = await _productUnitRepository.FetchAll()
                                                 .Select(x => new SelectListItem()

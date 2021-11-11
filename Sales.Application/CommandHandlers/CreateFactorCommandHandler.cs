@@ -4,6 +4,7 @@ using Sales.Application.Commands;
 using Sales.Application.IServices;
 using Sales.Domain.AggerregatesModel.FactorAggregate;
 using Sales.Domain.Context;
+using Sales.Domain.Exceptions;
 using Sales.Domain.IRepositories;
 using Sales.Infrastructura.EntityConfiguration;
 using System;
@@ -40,7 +41,7 @@ namespace Sales.Application.CommandHandlers
                                                         .ToListAsync();
 
             if (!products.Any())
-                throw new Exception("Products not found!");
+                throw new SalesException("Products not found!");
 
            foreach(var item in products)
            {

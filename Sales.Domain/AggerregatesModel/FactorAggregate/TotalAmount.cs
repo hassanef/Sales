@@ -1,4 +1,5 @@
 ﻿using Framework.DomainDrivenDesign.Domain.SeedWork;
+using Sales.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Sales.Domain.AggerregatesModel.FactorAggregate
         public TotalAmount(string type, decimal value)
         {
             if (value <= 0)
-                throw new Exception("TotalAmount.value is not valid!");
+                throw new SalesException("TotalAmount.value is not valid!");
 
             //Type can be changing for any other countries money, but here just use static type
             Type = "Rial";

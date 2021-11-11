@@ -1,4 +1,5 @@
 ﻿using Framework.DomainDrivenDesign.Domain.SeedWork;
+using Sales.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Sales.Domain.AggerregatesModel.FactorAggregate
         public Factor(decimal totalAmount)
         {
             if (totalAmount <= 0)
-                throw new Exception("totalAmount is not valid!");
+                throw new SalesException("totalAmount is not valid!");
 
             TotalAmount = totalAmount;
             CreateDate = DateTime.Now;

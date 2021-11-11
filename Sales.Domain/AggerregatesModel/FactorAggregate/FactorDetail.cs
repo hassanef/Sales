@@ -1,5 +1,6 @@
 ﻿using Framework.DomainDrivenDesign.Domain.SeedWork;
 using Sales.Domain.AggerregatesModel.ProductAggregate;
+using Sales.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,7 +27,7 @@ namespace Sales.Domain.AggerregatesModel.FactorAggregate
         {
             //here should put clause about business
             if (quantity <= 0 || price <= 0)
-                throw new Exception("Quantity or Price isn't valid!");
+                throw new SalesException("Quantity or Price isn't valid!");
 
             TotalAmount = quantity * price;
         }
